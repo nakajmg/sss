@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+    <title>SkyWay</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+    <div>
+        <h2>webRTC data channel</h2>
+        <div>
+            <input type="text" id="message" value="" autofocus>
+            <input type="button" class="btn btn-default" value="メッセージを送る" onclick="">
+            <div id="history"></div>
+        </div>
+    </div>
+
+
+    <div>
+        <p>あなたのPeerID：<span id="my-id">...</span></p>
+        <p>チャット可能なPeerID：<select id="contactlist" name="contact"></select></p>
+        <input type="button" class="btn btn-default" id="make-connection" value="接続" onclick="">
+
+    </div>
+
+    <div id="push">
+        <button class="punch" id="beep">beep!</button>
+    </div>
+
+
+    <script type="text/javascript" src="./js/jquery-2.0.3.js"></script>
+    <script type="text/javascript" src="https://skyway.io/dist/0.3/peer.js"></script>
+    <script type="text/javascript" src="./js/script.js"></script>
+</body>
+</html>
