@@ -8,7 +8,7 @@
 
     <p>
     	あなたのPeerID：<span id="my-id">...</span><br>
-    	チャット中のPeerID:<span id="another-id"></span><br>
+    	チャット中のPeerID：<span id="their-id"></span><br>
     	チャット可能なPeerID：<select id="contactlist" name="contact"></select>
     	<button type="button" id="make-connection">接続</button>
     </p>
@@ -18,7 +18,17 @@
     	<button type="button" id="beep">beep!</button>
     </div>
 
+    <div>
+        <h2>LET'S PLAY SOUNDS</h2>
+        <button type="button" id="sounds-hh">Hi-hat</button>
+        <button type="button" id="sounds-sd">Snare Drum</button>
+        <button type="button" id="sounds-bd">Bass Drum</button>
+        <button type="button" id="sounds-cy">Cymbal</button>
+    </div>
+
     <div id="history">
+        <ul>
+        </ul>
     </div>
 
     <script src="js/jquery-2.0.3.js"></script>
