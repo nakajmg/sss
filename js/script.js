@@ -106,6 +106,8 @@ function playSounds(sounds){
 function dataChannelEvent(conn){
 	peerConn = conn;
     $('#their-id').text(peerConn.peer);
+    $("#sound-buttons").show();
+
 
 	peerConn.on('data', function(data){
 		console.log(data);
@@ -119,6 +121,8 @@ function dataChannelEvent(conn){
 
 // イベントハンドラー
 $(function(){
+
+    $("#sound-buttons").hide();
 
     // PCスマホ間のver違いによるエラー対策
     util.supports.sctp = false;
