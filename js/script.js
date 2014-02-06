@@ -141,15 +141,15 @@ $(function(){
 
     $('#sounds-hh').click(function(event) {
         sendMsg('sound', 'Hi-hat');
-        $('#history ul').prepend('<li> you : hihat</li>');
+        $('#history ul').prepend('<li> you : Hi-hat</li>');
     });
     $('#sounds-sd').click(function(event) {
         sendMsg('sound', 'Snare Drum');
-        $('#history ul').prepend('<li> you : snareDrum</li>');
+        $('#history ul').prepend('<li> you : Snare Drum</li>');
     });
     $('#sounds-bd').click(function(event) {
         sendMsg('sound', 'Bass Drum');
-        $('#history ul').prepend('<li> you : BassDrum</li>');
+        $('#history ul').prepend('<li> you : Bass Drum</li>');
     });
     $('#sounds-cy').click(function(event) {
         sendMsg('sound', 'Cymbal');
