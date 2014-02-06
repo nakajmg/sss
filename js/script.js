@@ -78,6 +78,8 @@ function dataChannelEvent(conn){
 // イベントハンドラー
 $(function(){
 
+    util.supports.sctp = false;
+
     $('#make-connection').click(function(event) {
         connect($('#contactlist').val());
     });
