@@ -78,6 +78,7 @@ function dataChannelEvent(conn){
 // イベントハンドラー
 $(function(){
 
+    // PCスマホ間のver違いによるエラー対策
     util.supports.sctp = false;
 
     $('#make-connection').click(function(event) {
