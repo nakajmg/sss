@@ -18,6 +18,12 @@
     	<button type="button" id="beep">beep!</button>
     </div>
 
+    <script>
+        $(function(){
+            util.supports.sctp = false;
+        });
+    </script>
+
     <script src="js/jquery-2.0.3.js"></script>
 	<script src="https://skyway.io/dist/0.3/peer.js"></script>
 	<script src="js/script.js"></script>
