@@ -49,6 +49,17 @@ var files = [
     "samples/cy.wav"
 ];
 
+// タッチサポートの判定
+var SUPPORTS_TOUCH = 'createTouch' in document;
+var mouse_down = (SUPPORTS_TOUCH ? 'ontouchstart' : 'onmousedown');
+
+// UI要素の準備
+var beep = document.getElementById('beep');
+var soundsHh = document.getElementById('sounds-hh');
+var soundsSd = document.getElementById('sounds-sd');
+var soundsBd = document.getElementById('sounds-bd');
+var soundsCy = document.getElementById('sounds-cy');
+
 function LoadBuffers() {
     req.open("GET", files[loadidx], true);
     req.responseType = "arraybuffer";
@@ -121,7 +132,6 @@ function dataChannelEvent(conn){
 
 // イベントハンドラー
 $(function(){
-
     $("#sound-buttons").hide();
 
     // PCスマホ間のver違いによるエラー対策
@@ -129,34 +139,34 @@ $(function(){
 
     // load sounds
     LoadBuffers();
-
+    
+    // イベントリスナーの追加
     $('#make-connection').click(function(event) {
         connect($('#contactlist').val());
     });
-
-    $('#beep').click(function(event) {
+ 
+    beep[mouse_down] = function(event) {
         sendMsg('sound', 'beep');
         $('#history ul').prepend('<li> you : beep</li>');
-    });
+    };
 
-    $('#sounds-hh').click(function(event) {
+    soundsHh[mouse_down] = function(event) {
         sendMsg('sound', 'Hi-hat');
         $('#history ul').prepend('<li> you : Hi-hat</li>');
-    });
-    $('#sounds-sd').click(function(event) {
+    };
+    soundsSd[mouse_down] = function(event) {
         sendMsg('sound', 'Snare Drum');
         $('#history ul').prepend('<li> you : Snare Drum</li>');
-    });
-    $('#sounds-bd').click(function(event) {
+    };
+    soundsBd[mouse_down] = function(event) {
         sendMsg('sound', 'Bass Drum');
         $('#history ul').prepend('<li> you : Bass Drum</li>');
-    });
-    $('#sounds-cy').click(function(event) {
+    };
+    soundsCy[mouse_down] = function(event) {
         sendMsg('sound', 'Cymbal');
         $('#history ul').prepend('<li> you : Cymbal</li>');
-    });
+    };
 
     //ユーザリスト取得開始
     setInterval(getUserList, 2000);
-
 });
