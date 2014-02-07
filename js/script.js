@@ -32,6 +32,11 @@ peer.on('connection', function(conn){
 	dataChannelEvent(conn);
 });
 
+// エラーハンドラー
+peer.on('error', function(err){
+    alert(err.message);
+});
+
 function connect(peerid){
     var conn = peer.connect( $('#contactlist').val(), {"serialization": "json"} );
     dataChannelEvent(conn);
