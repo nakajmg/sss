@@ -145,10 +145,10 @@ $(function(){
         connect($('#contactlist').val());
     });
  
-    beep[mouse_down] = function(event) {
-        sendMsg('sound', 'beep');
-        $('#history ul').prepend('<li> you : beep</li>');
-    };
+    // beep[mouse_down] = function(event) {
+    //     sendMsg('sound', 'beep');
+    //     $('#history ul').prepend('<li> you : beep</li>');
+    // };
 
     soundsHh[mouse_down] = function(event) {
         sendMsg('sound', 'Hi-hat');
