@@ -4,9 +4,9 @@ window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
 window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext;
 
 // SkyWay API Key for localhost
-var APIKEY = '6165842a-5c0d-11e3-b514-75d3313b9d05';
+// var APIKEY = '6165842a-5c0d-11e3-b514-75d3313b9d05';
 // SkyWay API Key for mizuman.github.io
-// var APIKEY = '84db5394-8d3b-11e3-ab66-e500405b4002';
+var APIKEY = '84db5394-8d3b-11e3-ab66-e500405b4002';
 
 // ユーザ名をランダムに生成
 var userName = 'guest' + Math.floor(Math.random() * 100);
