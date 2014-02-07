@@ -9,7 +9,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 var APIKEY = '84db5394-8d3b-11e3-ab66-e500405b4002';
 
 // ユーザ名をランダムに生成
-var userName = 'guest' + Math.floor(Math.random() * 100);
+// var userName = 'guest' + Math.floor(Math.random() * 100);
 
 // ユーザーリスト
 var userList = [];
