@@ -6,11 +6,6 @@ body {
 	clear: both;
 }
 
-#push {
-	height: 100px;
-	width: 100%;
-}
-
-sound-buttons img {
+#sound-buttons img {
   padding: 2px;
 }
