@@ -59,7 +59,7 @@ var SUPPORTS_TOUCH = 'createTouch' in document;
 var mouse_down = (SUPPORTS_TOUCH ? 'ontouchstart' : 'onmousedown');
 
 // UI要素の準備
-var beep = document.getElementById('beep');
+// var beep = document.getElementById('beep');
 var soundsHh = document.getElementById('sounds-hh');
 var soundsSd = document.getElementById('sounds-sd');
 var soundsBd = document.getElementById('sounds-bd');
@@ -109,7 +109,7 @@ function makeSounds(buffer){
     var source = audioContext.createBufferSource();
     source.buffer = buffer;
     source.connect(audioContext.destination);
-    source.noteOn(0);
+    source.start(0);
 }
 
 function playSounds(sounds){
