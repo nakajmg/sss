@@ -240,6 +240,7 @@ $(function(){
     // イベントリスナーの追加
     $('#make-connection').click(function(event) {
         connect($('#contactlist').val());
+        $('#make-connection').hide();
     });
 
     $('#session-call').click(function(event) {
