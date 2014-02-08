@@ -67,7 +67,8 @@ function connect(peerid){
 
     if(i==chatList.length) {
         var conn = peer.connect( $('#contactlist').val(), {"serialization": "json"} );
-        dataChannelEvent(conn);          
+        dataChannelEvent(conn);
+        $('#session-info').hide();
     }
       
 
@@ -240,7 +241,6 @@ $(function(){
     // イベントリスナーの追加
     $('#make-connection').click(function(event) {
         connect($('#contactlist').val());
-        $('#make-connection').hide();
     });
 
     $('#session-call').click(function(event) {
