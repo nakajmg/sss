@@ -109,7 +109,7 @@ function makeSounds(buffer){
     var source = audioContext.createBufferSource();
     source.buffer = buffer;
     source.connect(audioContext.destination);
-    source.noteOn(0);
+    source.start(0);
 }
 
 function playSounds(sounds){
