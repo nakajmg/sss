@@ -34,7 +34,7 @@ peer.on('connection', function(conn){
 
 // エラーハンドラー
 peer.on('error', function(err){
-    alert(err.message);
+    alert(err);
 });
 
 function connect(peerid){
