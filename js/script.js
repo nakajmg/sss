@@ -106,7 +106,7 @@ function getUserList () {
     $.get('https://skyway.io/active/list/'+APIKEY,
         function(list){
             for(var cnt = 0;cnt < list.length;cnt++){
-                if($.inArray(list[cnt],userList)<0 && list[cnt] != peer.id){
+                if($.inArray(list[cnt],userList)<0 && list[cnt] != peer.id && list[cnt].search('host') == 0){
                     userList.push(list[cnt]);
                     $('#contactlist').append($('<option>', {"value":list[cnt],"text":list[cnt]}));
                 }
