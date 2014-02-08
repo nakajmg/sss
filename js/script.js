@@ -174,12 +174,14 @@ function setPlayerList(player){
 
     if(playerList.length == chatList.length) {
         console.log("all mens ready!");
+        heartBeat();
         clearTimeout(countdown);
         startMusic();
     }
 }
 
 function heartBeat(){
+    if(lagList) console.log(lagList);
     HBStartTime = new Date();
     for(var i = 0; i < peerConn.length; i++){
         peerConn[i].send({type:'info',text:'heartbeat'});
@@ -191,7 +193,8 @@ function getTransferLag(data){
     var lag = HBEndTime - HBStartTime;
 
     lagList[data.user] = lag/2;
-    console.log('Transfer lag time : ' + data.user + ' ' + lag/2 + 'ms');
+
+    // console.log('Transfer lag time : ' + data.user + ' ' + lag/2 + 'ms');
 }
 
 function dataChannelEvent(conn){
@@ -277,5 +280,5 @@ $(function(){
     
     //ユーザリスト取得開始
     setInterval(getUserList, 2000);
-    setInterval(heartBeat, 10000);
+    setInterval(heartBeat, 20000);
 });
