@@ -274,10 +274,10 @@ $(function(){
         sendMsg('sound', 'bd', 'drum', 'bd');
         $('#history ul').prepend('<li> you : Bass Drum</li>');
     };
-    soundsCy[mouse_down] = function(event) {
-        sendMsg('sound', 'cy', 'drum', 'cy');
-        $('#history ul').prepend('<li> you : Cymbal</li>');
-    };
+    // soundsCy[mouse_down] = function(event) {
+    //     sendMsg('sound', 'cy', 'drum', 'cy');
+    //     $('#history ul').prepend('<li> you : Cymbal</li>');
+    // };
     
     //ユーザリスト取得開始
     setInterval(getUserList, 2000);
