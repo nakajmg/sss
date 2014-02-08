@@ -2,12 +2,13 @@
 <html>
 <head>
 	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
 	<title>test</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="css/style.css">
+    <!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -16,7 +17,7 @@
     <![endif]-->
 </head>
 <body>
-
+<section class="drum">
     <!-- メニューバー -->
     <div class="container">
         <!-- Static navbar -->
@@ -41,11 +42,36 @@
 
 	<h2>test page</h2>
 
+
+    <ul class="drum-tabs">
+        <li data-index="0" class="drum-tab drum-tab-hh active">Hi-Hat
+        <li data-index="1" class="drum-tab drum-tab-bd">Bass Drum
+        <li data-index="2" class="drum-tab drum-tab-sd">Snare
+    </ul>
+    <section data-index="0" class="drum-content drum-content-hh active">
+        <div class="drum-item drum-hh">
+            Hi-Hat
+            <div class="drum-effect"></div>
+        </div>
+    </section>
+    <section data-index="1" class="drum-content drum-content-bd">
+        <div class="drum-item drum-bd">
+            Bass Drum
+            <div class="drum-effect"></div>
+        </div>
+    </section>
+    <section data-index="2" class="drum-content drum-content-sd">
+        <div class="drum-item drum-sd">
+            Snare
+            <div class="drum-effect"></div>
+        </div>
+    </section>
+
     <p>
-    	あなたのPeerID：<span id="my-id">...</span><br>
-    	チャット中のPeerID：<span id="their-id"></span><br>
-    	チャット可能なPeerID：<select id="contactlist" name="contact"></select>
-    	<button type="button" id="make-connection">接続</button>
+        あなたのPeerID：<span id="my-id">...</span><br>
+        チャット中のPeerID：<span id="their-id"></span><br>
+        チャット可能なPeerID：<select id="contactlist" name="contact"></select>
+        <button type="button" id="make-connection">接続</button>
     </p>
 
     <div id="sound-buttons">
@@ -59,7 +85,7 @@
         <ul>
         </ul>
     </div>
-
+</section>
     <script type="text/javascript">
         // ユーザ名をランダムに生成
         var userName = 'drum' + Math.floor(Math.random() * 100);
@@ -69,5 +95,41 @@
     <script src="./js/bootstrap.min.js"></script>
 	<script src="https://skyway.io/dist/0.3/peer.js"></script>
 	<script src="./js/script.js"></script>
+
+<script>
+$(function(){
+    $(".drum").on("touchstart", ".drum-item", function(){
+        $(this).addClass("touched");
+    });
+    $(".drum").on("touchend", ".drum-item", function(){
+        $(this).removeClass("touched");
+        $(this).find(".drum-effect").addClass("anime-push").one("webkitAnimationEnd",function(){
+            $(this).removeClass("anime-push");
+        });
+    });
+
+    var $contents = $(".drum-content");
+    var $tabs = $(".drum-tab");
+
+    $tabs.each(function() {
+        $(this).on("click",function(){
+            var idx = $(this).attr("data-index");
+            if( idx === $(".drum-conent.active").attr("data-index") ){
+
+            }else{
+                $tabs.each(function(){
+                    $(this).removeClass("active");
+                });
+                $contents.each(function(){
+                    $(this).removeClass("active");
+                })
+                $(this).addClass("active");
+                $($contents[idx]).addClass("active");
+            }
+        });
+    });
+
+});
+</script>
 </body>
 </html>
