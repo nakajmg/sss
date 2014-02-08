@@ -15,6 +15,10 @@ var multiplier = interval * accuracy;
 var timer;
 var countdown;
 
+// for measurement transfer lag
+var HBStartTime;
+var lagList = {};
+
 // Compatibility
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
@@ -128,7 +132,7 @@ function sendMsg(type, message, instruments, key) {
     for(var i = 0; i < peerConn.length; i++){
     	peerConn[i].send(data);
     }
-    console.log(data);
+    // console.log(data);
 }
 
 function makeSounds(buffer){
@@ -175,6 +179,21 @@ function setPlayerList(player){
     }
 }
 
+function heartBeat(){
+    HBStartTime = new Date();
+    for(var i = 0; i < peerConn.length; i++){
+        peerConn[i].send({type:'info',text:'heartbeat'});
+    }
+}
+
+function getTransferLag(data){
+    var HBEndTime = new Date();
+    var lag = HBEndTime - HBStartTime;
+
+    lagList[data.user] = lag/2;
+    console.log('Transfer lag time : ' + data.user + ' ' + lag/2 + 'ms');
+}
+
 function dataChannelEvent(conn){
 	peerConn[peerConn.length] = conn;
     $('#their-id').append(conn.peer);
@@ -186,7 +205,7 @@ function dataChannelEvent(conn){
 
     // for(var i = 0; i < peerConn.length; i++){
         peerConn[peerConn.length-1].on('data', function(data){
-            console.log(data);
+            // console.log(data);
             if(data.type == 'sound'){
                 makeSounds(buffers[data.key]);
                 $('#history ul').prepend('<li> ' + data.user + ' : ' + data.key + ' (' + data.inst + ')</li>');
@@ -194,6 +213,8 @@ function dataChannelEvent(conn){
             else if(data.type == 'info'){
                 if(data.text == 'Ready?') $("#session-response").show();
                 if(data.text == 'OK!') setPlayerList(data.user);
+                if(data.text == 'heartbeat') sendMsg('info','alive');
+                if(data.text == 'alive') getTransferLag(data);
             }
         });
     // }
@@ -256,4 +277,5 @@ $(function(){
     
     //ユーザリスト取得開始
     setInterval(getUserList, 2000);
+    setInterval(heartBeat, 10000);
 });
