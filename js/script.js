@@ -207,7 +207,7 @@ function getTransferLag(data){
 
     labList[data.user] = (undefined) ? 0 : 500;
 
-    //console.log('Transfer lag time : ' + data.user + ' ' + lag/2 + 'ms');
+    // console.log('Transfer lag time : ' + data.user + ' ' + lag/2 + 'ms');
 }
 
 function showTiming(isGood) {
