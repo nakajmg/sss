@@ -1,3 +1,19 @@
+
+// CONFIG OPTIONS START
+
+var accuracy = 4; // 1 = crotchet, 2 = quaver, 4 = semi-quaver
+var bpm = 120; // beats per minute
+var silent = ['cy']; // List silent instruments
+
+// CONFIG OPTIONS END
+
+// Audio speed settings
+var count = 0;
+var bps = bpm / 60; // beats per second
+var interval = (1000 / bps / accuracy) >> 0; // seconds per beat
+var multiplier = interval * accuracy;
+
+
 // Compatibility
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
@@ -118,11 +134,29 @@ function makeSounds(buffer){
 }
 
 function playSounds(sounds){
-    if(sounds == 'Hi-hat') makeSounds(buffers[0]);
-    else if (sounds == 'Snare Drum') makeSounds(buffers[1]);
-    else if (sounds == 'Bass Drum') makeSounds(buffers[2]);
-    else if (sounds == 'Cymbal') makeSounds(buffers[3]);
+    if(sounds == 'bd') makeSounds(buffers[0]);
+    else if (sounds == 'sd') makeSounds(buffers[1]);
+    else if (sounds == 'hh') makeSounds(buffers[2]);
+    else if (sounds == 'cy') makeSounds(buffers[3]);
 }
+
+
+function playSound(note) {
+    playSounds(note.key);
+}
+
+// 音楽に合わせて音を出すべきか
+function checkSound() {
+    if (drum.length < 1) {
+        window.clearInterval(timer);
+    } else if (drum[0].time * multiplier === count) {
+            var beat = drum.shift();
+            beat.data.forEach(playSound);
+            
+    }
+    count = count + interval;
+}
+
 
 function setPlayerList(player){
     playerList[playerList.length] = player;
@@ -183,21 +217,25 @@ $(function(){
     // };
 
     soundsHh[mouse_down] = function(event) {
-        sendMsg('sound', 'Hi-hat');
+        sendMsg('sound', 'hh');
         $('#history ul').prepend('<li> you : Hi-hat</li>');
     };
     soundsSd[mouse_down] = function(event) {
-        sendMsg('sound', 'Snare Drum');
+        sendMsg('sound', 'sd');
         $('#history ul').prepend('<li> you : Snare Drum</li>');
     };
     soundsBd[mouse_down] = function(event) {
-        sendMsg('sound', 'Bass Drum');
+        sendMsg('sound', 'bd');
         $('#history ul').prepend('<li> you : Bass Drum</li>');
     };
     soundsCy[mouse_down] = function(event) {
-        sendMsg('sound', 'Cymbal');
+        sendMsg('sound', 'cy');
         $('#history ul').prepend('<li> you : Cymbal</li>');
     };
+    
+    // 音楽用のタイマー
+    timer = window.setInterval(checkSound, interval);
+    checkSound();
 
     //ユーザリスト取得開始
     setInterval(getUserList, 2000);
