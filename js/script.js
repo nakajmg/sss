@@ -16,6 +16,7 @@ var APIKEY = '1e1140a4-9099-11e3-87ef-c90d583d86c3';
 // ユーザーリスト
 var userList = [];
 var chatList = [];
+var playerList = [];
 
 // PeerJSオブジェクトを生成
 var peer = new Peer(userName,{ key: APIKEY});
@@ -123,21 +124,30 @@ function playSounds(sounds){
     else if (sounds == 'Cymbal') makeSounds(buffers[3]);
 }
 
+function setPlayerList(player){
+    playerList[playerList.length] = player;
+}
+
 function dataChannelEvent(conn){
 	peerConn[peerConn.length] = conn;
     $('#their-id').append(conn.peer);
     $("#sound-buttons").show();
+    $("#session-call").show();
 
 
-    for(var i = 0; i < peerConn.length; i++){
-        peerConn[i].on('data', function(data){
+    // for(var i = 0; i < peerConn.length; i++){
+        peerConn[peerConn.length-1].on('data', function(data){
             console.log(data);
             if(data.type == 'sound'){
                 playSounds(data.text);
                 $('#history ul').prepend('<li> ' + data.user + ' : ' + data.text + '</li>');
             }
+            else if(data.type == 'info'){
+                if(data.text == 'Ready?') $("#session-answer").show();
+                if(data.text == 'OK!') setPlayerList(data.user);
+            }
         });
-    }
+    // }
 
 }
 
@@ -145,6 +155,8 @@ function dataChannelEvent(conn){
 // イベントハンドラー
 $(function(){
     $("#sound-buttons").hide();
+    $("#session-call").hide();
+    $("#session-answer").hide();
 
     // PCスマホ間のver違いによるエラー対策
     util.supports.sctp = false;
@@ -155,6 +167,14 @@ $(function(){
     // イベントリスナーの追加
     $('#make-connection').click(function(event) {
         connect($('#contactlist').val());
+    });
+
+    $('#session-call').click(function(event) {
+        sendMsg('info', 'Ready?');
+    });
+
+    $('#session-answer').click(function(event) {
+        sendMsg('info', 'OK!');
     });
  
     // beep[mouse_down] = function(event) {
