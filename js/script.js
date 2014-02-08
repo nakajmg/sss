@@ -3,7 +3,7 @@
 
 var accuracy = 8; // 1 = crotchet, 2 = quaver, 4 = semi-quaver, 8 = demi-semi-quaver
 var bpm = 100; // beats per minute
-var margin = 300; // How many milliseconds to forgive missed beats
+var margin = 200; // How many milliseconds to forgive missed beats
 var muted = ['']; // List muted (silent) instruments
 
 // CONFIG OPTIONS END
@@ -205,9 +205,9 @@ function getTransferLag(data){
     var HBEndTime = new Date();
     var lag = HBEndTime - HBStartTime;
 
-    lagList[data.user] = lag/2;
+    labList[data.user] = (undefined) ? 0 : 500;
 
-    // console.log('Transfer lag time : ' + data.user + ' ' + lag/2 + 'ms');
+    console.log('Transfer lag time : ' + data.user + ' ' + lag/2 + 'ms');
 }
 
 function showTiming(isGood) {
@@ -219,7 +219,7 @@ function showTiming(isGood) {
 }
 
 function checkAccuracy(data) {
-    var soundTime = count; // - lag; // lagList.peerid; 
+    var soundTime = count - lag; // lagList.peerid; 
     var nextBeat = drum[0];
     
     if (soundTime - currentBeat.time * multiplier < nextBeat.time * multiplier - soundTime) {
