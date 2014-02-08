@@ -184,6 +184,8 @@ function dataChannelEvent(conn){
     $("#sound-buttons").show();
     $("#session-call").show();
 
+    chatList[chatList.length] = conn.peer;
+
 
     // for(var i = 0; i < peerConn.length; i++){
         peerConn[peerConn.length-1].on('data', function(data){
