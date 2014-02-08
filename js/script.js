@@ -12,7 +12,7 @@ var count = 0;
 var bps = bpm / 60; // beats per second
 var interval = (1000 / bps / accuracy) >> 0; // seconds per beat
 var multiplier = interval * accuracy;
-
+var timer;
 
 // Compatibility
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
@@ -78,7 +78,6 @@ var SUPPORTS_TOUCH = 'createTouch' in document;
 var mouse_down = (SUPPORTS_TOUCH ? 'ontouchstart' : 'onmousedown');
 
 // UI要素の準備
-// var beep = document.getElementById('beep');
 var soundsHh = document.getElementById('sounds-hh');
 var soundsSd = document.getElementById('sounds-sd');
 var soundsBd = document.getElementById('sounds-bd');
@@ -213,11 +212,12 @@ $(function(){
         sendMsg('info', 'OK!');
     });
  
-    // beep[mouse_down] = function(event) {
-    //     sendMsg('sound', 'beep');
-    //     $('#history ul').prepend('<li> you : beep</li>');
-    // };
-
+    $('#music-start').click(function(event) {
+        // 音楽用のタイマー
+        timer = window.setInterval(checkSound, interval);
+        checkSound();
+    });
+ 
     soundsHh[mouse_down] = function(event) {
         sendMsg('sound', 'hh');
         $('#history ul').prepend('<li> you : Hi-hat</li>');
@@ -235,10 +235,6 @@ $(function(){
         $('#history ul').prepend('<li> you : Cymbal</li>');
     };
     
-    // 音楽用のタイマー
-    timer = window.setInterval(checkSound, interval);
-    checkSound();
-
     //ユーザリスト取得開始
     setInterval(getUserList, 2000);
 });
