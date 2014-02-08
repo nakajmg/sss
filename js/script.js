@@ -58,8 +58,15 @@ peer.on('error', function(err){
 });
 
 function connect(peerid){
-    var conn = peer.connect( $('#contactlist').val(), {"serialization": "json"} );
-    dataChannelEvent(conn);
+
+    for(var i=0; i<chatList.length && chatList[i] != peerid; i++);
+
+    if(i==chatList.length) {
+        var conn = peer.connect( $('#contactlist').val(), {"serialization": "json"} );
+        dataChannelEvent(conn);          
+    }
+      
+
 }
 
 // Audio contextを生成
@@ -108,11 +115,14 @@ function getUserList () {
     );
 }
 
-function sendMsg(type, message, recipient) {
+function sendMsg(type, message, instruments, key) {
+
 	var data = {
 		type: type,
 		user: userName,
-		text: message
+		text: message,
+        inst: instruments,
+        key : key
 	};
 
     for(var i = 0; i < peerConn.length; i++){
@@ -178,8 +188,8 @@ function dataChannelEvent(conn){
         peerConn[peerConn.length-1].on('data', function(data){
             console.log(data);
             if(data.type == 'sound'){
-                makeSounds(buffers[data.text]);
-                $('#history ul').prepend('<li> ' + data.user + ' : ' + data.text + '</li>');
+                makeSounds(buffers[data.key]);
+                $('#history ul').prepend('<li> ' + data.user + ' : ' + data.key + ' (' + data.inst + ')</li>');
             }
             else if(data.type == 'info'){
                 if(data.text == 'Ready?') $("#session-response").show();
@@ -228,19 +238,19 @@ $(function(){
     });
  
     soundsHh[mouse_down] = function(event) {
-        sendMsg('sound', 'hh');
+        sendMsg('sound', 'hh', 'drum', 'hh');
         $('#history ul').prepend('<li> you : Hi-hat</li>');
     };
     soundsSd[mouse_down] = function(event) {
-        sendMsg('sound', 'sd');
+        sendMsg('sound', 'sd', 'drum', 'sd');
         $('#history ul').prepend('<li> you : Snare Drum</li>');
     };
     soundsBd[mouse_down] = function(event) {
-        sendMsg('sound', 'bd');
+        sendMsg('sound', 'bd', 'drum', 'bd');
         $('#history ul').prepend('<li> you : Bass Drum</li>');
     };
     soundsCy[mouse_down] = function(event) {
-        sendMsg('sound', 'cy');
+        sendMsg('sound', 'cy', 'drum', 'cy');
         $('#history ul').prepend('<li> you : Cymbal</li>');
     };
     
