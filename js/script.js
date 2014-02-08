@@ -13,6 +13,7 @@ var bps = bpm / 60; // beats per second
 var interval = (1000 / bps / accuracy) >> 0; // seconds per beat
 var multiplier = interval * accuracy;
 var timer;
+var countdown;
 
 // Compatibility
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
@@ -158,9 +159,23 @@ function checkSound() {
     count = count + interval;
 }
 
+function startMusic() {
+    // 音楽用のタイマー
+    timer = window.setInterval(checkSound, interval);
+    checkSound();
+}
+
 
 function setPlayerList(player){
-    playerList[playerList.length] = player;
+    for(var i=0; i < playerList.length && playerList[i] != player ; i++);
+    if(i == playerList.length) playerList[playerList.length] = player;
+    $('#session').append(player);
+
+    if(playerList.length == chatList.length) {
+        console.log("all mens ready!");
+        clearTimeout(countdown);
+        startMusic();
+    }
 }
 
 function dataChannelEvent(conn){
@@ -178,7 +193,7 @@ function dataChannelEvent(conn){
                 $('#history ul').prepend('<li> ' + data.user + ' : ' + data.text + '</li>');
             }
             else if(data.type == 'info'){
-                if(data.text == 'Ready?') $("#session-answer").show();
+                if(data.text == 'Ready?') $("#session-response").show();
                 if(data.text == 'OK!') setPlayerList(data.user);
             }
         });
@@ -191,7 +206,7 @@ function dataChannelEvent(conn){
 $(function(){
     $("#sound-buttons").hide();
     $("#session-call").hide();
-    $("#session-answer").hide();
+    $("#session-response").hide();
 
     // PCスマホ間のver違いによるエラー対策
     util.supports.sctp = false;
@@ -205,17 +220,22 @@ $(function(){
     });
 
     $('#session-call').click(function(event) {
-        sendMsg('info', 'Ready?');
+       sendMsg('info', 'Ready?');
+        $('#session-call').text('募集中...');
+        $('#session').append('join : ');  
     });
 
-    $('#session-answer').click(function(event) {
+    $('#session-response').click(function(event) {
         sendMsg('info', 'OK!');
+        $('#session-response').hide();
+        countdown = setTimeout('startMusic()',1000);
     });
  
     $('#music-start').click(function(event) {
-        // 音楽用のタイマー
-        timer = window.setInterval(checkSound, interval);
-        checkSound();
+        // // 音楽用のタイマー
+        // timer = window.setInterval(checkSound, interval);
+        // checkSound();
+        startMusic();
     });
  
     soundsHh[mouse_down] = function(event) {
