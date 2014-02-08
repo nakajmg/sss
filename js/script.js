@@ -3,6 +3,7 @@
 
 var accuracy = 8; // 1 = crotchet, 2 = quaver, 4 = semi-quaver, 8 = demi-semi-quaver
 var bpm = 100; // beats per minute
+var margin = 300; // How many milliseconds to forgive missed beats
 var muted = ['']; // List muted (silent) instruments
 
 // CONFIG OPTIONS END
@@ -225,7 +226,7 @@ function checkAccuracy(data) {
         // currentBeat is closest, i.e. user is late
         for (var i = 0, len = currentBeat.data.length; i < len; i++) {
             if (currentBeat.data[i].key === data.key) {
-                if (soundTime - currentBeat.time * multiplier < interval) {
+                if (soundTime - currentBeat.time * multiplier < margin) {
                     showTiming(true);
                 } else {
                     showTiming(false);
@@ -236,7 +237,7 @@ function checkAccuracy(data) {
         // nextBeat is closest, i.e. user is early
         for (var i = 0, len = nextBeat.data.length; i < len; i++) {
             if (nextBeat.data[i].key === data.key) {
-                if (nextBeat.time * multiplier - soundTime < interval) {
+                if (nextBeat.time * multiplier - soundTime < margin) {
                     showTiming(true);
                 } else {
                     showTiming(false);
