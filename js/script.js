@@ -3,7 +3,7 @@
 
 var accuracy = 4; // 1 = crotchet, 2 = quaver, 4 = semi-quaver
 var bpm = 120; // beats per minute
-var silent = ['cy']; // List silent instruments
+var muted = ['cy']; // List muted (silent) instruments
 
 // CONFIG OPTIONS END
 
@@ -142,7 +142,10 @@ function playSounds(sounds){
 
 
 function playSound(note) {
-    playSounds(note.key);
+    // Play sound if instrument is not muted
+    if (muted.indexOf(note.key) < 0) {
+        playSounds(note.key);
+    }
 }
 
 // 音楽に合わせて音を出すべきか
@@ -152,7 +155,6 @@ function checkSound() {
     } else if (drum[0].time * multiplier === count) {
             var beat = drum.shift();
             beat.data.forEach(playSound);
-            
     }
     count = count + interval;
 }
