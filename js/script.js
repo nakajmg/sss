@@ -3,7 +3,7 @@
 
 var accuracy = 4; // 1 = crotchet, 2 = quaver, 4 = semi-quaver
 var bpm = 120; // beats per minute
-var muted = ['cy']; // List muted (silent) instruments
+var muted = ['']; // List muted (silent) instruments
 
 // CONFIG OPTIONS END
 
@@ -64,15 +64,10 @@ function connect(peerid){
 
 // Audio contextを生成
 var audioContext = new AudioContext();
-var buffers = [];
+var buffers = {};
+var instruments = ['bd', 'sd', 'hh', 'cy'];
 var req = new XMLHttpRequest();
 var loadidx = 0;
-var files = [
-    "samples/bd.wav",
-    "samples/sd.wav",
-    "samples/hh.wav",
-    "samples/cy.wav"
-];
 
 // タッチサポートの判定
 var SUPPORTS_TOUCH = 'createTouch' in document;
@@ -85,13 +80,13 @@ var soundsBd = document.getElementById('sounds-bd');
 var soundsCy = document.getElementById('sounds-cy');
 
 function LoadBuffers() {
-    req.open("GET", files[loadidx], true);
+    req.open("GET", 'samples/' + instruments[loadidx] + '.wav', true);
     req.responseType = "arraybuffer";
     req.onload = function() {
         if(req.response) {
             audioContext.decodeAudioData(req.response,function(b){
-                buffers[loadidx]=b;
-                if(++loadidx < files.length)
+                buffers[instruments[loadidx]] = b;
+                if(++loadidx < instruments.length)
                     LoadBuffers();
             },function(){});
         }
@@ -133,18 +128,10 @@ function makeSounds(buffer){
     source.start(0);
 }
 
-function playSounds(sounds){
-    if(sounds == 'bd') makeSounds(buffers[0]);
-    else if (sounds == 'sd') makeSounds(buffers[1]);
-    else if (sounds == 'hh') makeSounds(buffers[2]);
-    else if (sounds == 'cy') makeSounds(buffers[3]);
-}
-
-
 function playSound(note) {
     // Play sound if instrument is not muted
     if (muted.indexOf(note.key) < 0) {
-        playSounds(note.key);
+        makeSounds(buffers[note.key]);
     }
 }
 
@@ -191,7 +178,7 @@ function dataChannelEvent(conn){
         peerConn[peerConn.length-1].on('data', function(data){
             console.log(data);
             if(data.type == 'sound'){
-                playSounds(data.text);
+                makeSounds(buffers[data.text]);
                 $('#history ul').prepend('<li> ' + data.user + ' : ' + data.text + '</li>');
             }
             else if(data.type == 'info'){
