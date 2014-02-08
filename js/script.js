@@ -20,7 +20,7 @@ var peer = new Peer(userName,{ key: APIKEY});
 // var peer = new Peer({ key: APIKEY, debug: 3});
 
 // PeerJS data connection object
-var peerConn;
+var peerConn = [];
 
 // PeerIDを生成
 peer.on('open', function(){
@@ -94,14 +94,16 @@ function getUserList () {
     );
 }
 
-function sendMsg(type, message) {
+function sendMsg(type, message, recipient) {
 	var data = {
 		type: type,
 		user: userName,
 		text: message
 	};
 
-	peerConn.send(data);
+    for(var i = 0; i < peerConn.length; i++){
+    	peerConn[i].send(data);
+    }
     console.log(data);
 }
 
@@ -120,18 +122,21 @@ function playSounds(sounds){
 }
 
 function dataChannelEvent(conn){
-	peerConn = conn;
-    $('#their-id').text(peerConn.peer);
+	peerConn[peerConn.length] = conn;
+    $('#their-id').append(conn.peer);
     $("#sound-buttons").show();
 
 
-	peerConn.on('data', function(data){
-		console.log(data);
-		if(data.type == 'sound'){
-            playSounds(data.text);
-            $('#history ul').prepend('<li> ' + peerConn.peer + ' : ' + data.text + '</li>');
-		}
-	});
+    for(var i = 0; i < peerConn.length; i++){
+        peerConn[i].on('data', function(data){
+            console.log(data);
+            if(data.type == 'sound'){
+                playSounds(data.text);
+                $('#history ul').prepend('<li> ' + data.user + ' : ' + data.text + '</li>');
+            }
+        });
+    }
+
 }
 
 
