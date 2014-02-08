@@ -1,7 +1,7 @@
 
 // CONFIG OPTIONS START
 
-var accuracy = 8; // 1 = crotchet, 2 = quaver, 4 = semi-quaver
+var accuracy = 8; // 1 = crotchet, 2 = quaver, 4 = semi-quaver, 8 = demi-semi-quaver
 var bpm = 100; // beats per minute
 var muted = ['']; // List muted (silent) instruments
 
@@ -249,6 +249,8 @@ function dataChannelEvent(conn){
 
     // for(var i = 0; i < peerConn.length; i++){
         peerConn[peerConn.length - 1].on('data', function(data){
+            checkAccuracy(data);
+            
             // console.log(data);
             if(data.type === 'sound') {
                 makeSounds(buffers[data.key]);
