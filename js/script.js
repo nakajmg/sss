@@ -17,6 +17,7 @@ var countdown;
 
 var currentBeat = {};
 var lag = 0; // Time lag across the network
+var isSession = false;
 
 // for measurement transfer lag
 var HBStartTime;
@@ -156,18 +157,25 @@ function playSound(note) {
 // 音楽に合わせて音を出すべきか
 function checkSound() {
     if (drum.length < 1) {
-        window.clearInterval(timer);
+        endMusic();
     } else if (drum[0].time * multiplier === count) {
-            currentBeat = drum.shift();
-            currentBeat.data.forEach(playSound);
+        currentBeat = drum.shift();
+        if ( currentBeat === null) endMusic();
+        else currentBeat.data.forEach(playSound);
     }
     count = count + interval;
+}
+
+function endMusic() {
+    isSession = false;
+    window.clearInterval(timer);
 }
 
 function startMusic() {
     // 音楽用のタイマー
     timer = window.setInterval(checkSound, interval);
     checkSound();
+    isSession = true;
 }
 
 
@@ -249,7 +257,10 @@ function dataChannelEvent(conn){
 
     // for(var i = 0; i < peerConn.length; i++){
         peerConn[peerConn.length - 1].on('data', function(data){
-            checkAccuracy(data);
+
+            if(isSession){
+                checkAccuracy(data);
+            }
             
             // console.log(data);
             if(data.type === 'sound') {
@@ -294,7 +305,7 @@ $(function(){
     $('#session-response').click(function(event) {
         sendMsg('info', 'OK!');
         $('#session-response').hide();
-        countdown = setTimeout('startMusic()',1000);
+        // countdown = setTimeout('startMusic()',1000);
     });
  
     $('#music-start').click(function(event) {
