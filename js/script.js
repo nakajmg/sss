@@ -1,8 +1,8 @@
 
 // CONFIG OPTIONS START
 
-var accuracy = 4; // 1 = crotchet, 2 = quaver, 4 = semi-quaver
-var bpm = 120; // beats per minute
+var accuracy = 8; // 1 = crotchet, 2 = quaver, 4 = semi-quaver
+var bpm = 100; // beats per minute
 var muted = ['']; // List muted (silent) instruments
 
 // CONFIG OPTIONS END
@@ -14,6 +14,9 @@ var interval = (1000 / bps / accuracy) >> 0; // seconds per beat
 var multiplier = interval * accuracy;
 var timer;
 var countdown;
+
+var currentBeat = {};
+var lag = 0; // Time lag across the network
 
 // for measurement transfer lag
 var HBStartTime;
@@ -155,8 +158,8 @@ function checkSound() {
     if (drum.length < 1) {
         window.clearInterval(timer);
     } else if (drum[0].time * multiplier === count) {
-            var beat = drum.shift();
-            beat.data.forEach(playSound);
+            currentBeat = drum.shift();
+            currentBeat.data.forEach(playSound);
     }
     count = count + interval;
 }
@@ -198,6 +201,43 @@ function getTransferLag(data){
     // console.log('Transfer lag time : ' + data.user + ' ' + lag/2 + 'ms');
 }
 
+function showTiming(isGood) {
+    if (isGood) {
+        $('#history ul').prepend('<li>Great!</li>');
+    } else {
+        $('#history ul').prepend('<li>Oops</li>');
+    }
+}
+
+function checkAccuracy(data) {
+    var soundTime = count; // - lag; // lagList.peerid; 
+    var nextBeat = drum[0];
+    
+    if (soundTime - currentBeat.time * multiplier < nextBeat.time * multiplier - soundTime) {
+        // currentBeat is closest, i.e. user is late
+        for (var i = 0, len = currentBeat.data.length; i < len; i++) {
+            if (currentBeat.data[i].key === data.key) {
+                if (soundTime - currentBeat.time * multiplier < interval) {
+                    showTiming(true);
+                } else {
+                    showTiming(false);
+                }
+            }
+        }
+    } else {
+        // nextBeat is closest, i.e. user is early
+        for (var i = 0, len = nextBeat.data.length; i < len; i++) {
+            if (nextBeat.data[i].key === data.key) {
+                if (nextBeat.time * multiplier - soundTime < interval) {
+                    showTiming(true);
+                } else {
+                    showTiming(false);
+                }
+            }
+        }
+    }
+}
+
 function dataChannelEvent(conn){
 	peerConn[peerConn.length] = conn;
     $('#their-id').append(conn.peer);
@@ -208,9 +248,9 @@ function dataChannelEvent(conn){
 
 
     // for(var i = 0; i < peerConn.length; i++){
-        peerConn[peerConn.length-1].on('data', function(data){
+        peerConn[peerConn.length - 1].on('data', function(data){
             // console.log(data);
-            if(data.type == 'sound'){
+            if(data.type === 'sound') {
                 makeSounds(buffers[data.key]);
                 $('#history ul').prepend('<li> ' + data.user + ' : ' + data.key + ' (' + data.inst + ')</li>');
             }
