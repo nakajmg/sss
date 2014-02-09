@@ -6,8 +6,8 @@
 	<title>test</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" type="text/css" href="./css/style.css"> -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -18,44 +18,58 @@
 </head>
 <body>
 
-    <!-- メニューバー -->
-    <div class="container">
-        <!-- Static navbar -->
-        <div class="navbar navbar-default" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="./index.html">Second Screen Session</a>
+<section class="sss-wrapper">
+    <header class="sss-header">
+        <h1 class="sss-title">Second Screen Session</h1>
+        <p class="sss-subTitle">Catch the beat</p>
+    </header>
+
+    <div class="sss-unitInfo host">
+        <p class="sss-unitInfo-id" id="my-id"></p>
+        <div class="sss-unitInfo-rowRight">
+            <div id="music" class="sss-unitInfo-btnWrapper">
+                <button class="sss-unitInfo-btn" id="music-start">Start Music</button>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="./index.html">Home</a></li>
-                    <li><a href="./drum.html">Drum</a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
+            <div id="session" class="sss-unitInfo-btnWrapper">
+                <button class="sss-unitInfo-btn" id="session-call">Start Session</button>
+            </div>
         </div>
     </div>
 
-	<h2>test page</h2>
+    <div class="sss-clients">
+        <div class="sss-unitInfo client unit-hh">
+            <p class="sss-unitInfo-id">drum01</p>
+            <p class="sss-unitInfo-inst">Drums</p>
+            <p class="sss-unitInfo-type">Hi-Hat</p>
+            <span class="sss-unitInfo-arrow"></span>
+        </div>
+        <div class="sss-unitInfo client unit-bd">
+            <p class="sss-unitInfo-id">drum02</p>
+            <p class="sss-unitInfo-inst">Drums</p>
+            <p class="sss-unitInfo-type">Bass Drum</p>
+        </div>
+        <div class="sss-unitInfo client unit-sd">
+            <p class="sss-unitInfo-id">drum03</p>
+            <p class="sss-unitInfo-inst">Drums</p>
+            <p class="sss-unitInfo-type">Snare</p>
+        </div>
+    </div>
 
+<!-- 
     <p>
     	あなたのPeerID：<span id="my-id">...</span><br>
     	チャット中のPeerID：<span id="their-id"></span><br>
     	チャット可能なPeerID：<select id="contactlist" name="contact"></select>
     	<button type="button" id="make-connection">接続</button>
     </p>
-
-    <div id="session">
+ -->
+<!--     <div id="session">
         <button type="button" id="session-call">セッション開始！</button>
-    </div>
+    </div> -->
 
-    <div id="music">
+ <!--    <div id="music">
         <button id="music-start">Musicスタート！</button>
-    </div>
+    </div> -->
 
     <div id="sound-buttons">
         <img class="" id="sounds-hh" src="http://dummyimage.com/100x40/fefefe/0010ee&text=Hi-hat" alt="Hi-hat">
