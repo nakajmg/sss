@@ -91,10 +91,10 @@ var SUPPORTS_TOUCH = 'createTouch' in document;
 var mouse_down = (SUPPORTS_TOUCH ? 'ontouchstart' : 'onmousedown');
 
 // UI要素の準備
-var soundsHh = document.getElementById('sounds-hh');
-var soundsSd = document.getElementById('sounds-sd');
-var soundsBd = document.getElementById('sounds-bd');
-var soundsCy = document.getElementById('sounds-cy');
+var soundElements = {};
+for (var i = 0, key; key = instruments[i]; i++) {
+    soundElements[key] = document.getElementById('sounds-' + key);
+}
 
 function LoadBuffers() {
     req.open("GET", 'samples/' + instruments[loadidx] + '.wav', true);
@@ -205,7 +205,7 @@ function getTransferLag(data){
     var HBEndTime = new Date();
     var lag = HBEndTime - HBStartTime;
 
-    labList[data.user] = (undefined) ? 0 : lag/2;
+    lagList[data.user] = (undefined) ? 0 : lag/2;
 
     // console.log('Transfer lag time : ' + data.user + ' ' + lag/2 + 'ms');
 }
@@ -316,19 +316,19 @@ $(function(){
         startMusic();
     });
  
-    soundsHh[mouse_down] = function(event) {
+    soundElements['hh'][mouse_down] = function(event) {
         sendMsg('sound', 'hh', 'drum', 'hh');
         $('#history ul').prepend('<li> you : Hi-hat</li>');
     };
-    soundsSd[mouse_down] = function(event) {
+    soundElements['sd'][mouse_down] = function(event) {
         sendMsg('sound', 'sd', 'drum', 'sd');
         $('#history ul').prepend('<li> you : Snare Drum</li>');
     };
-    soundsBd[mouse_down] = function(event) {
+    soundElements['bd'][mouse_down] = function(event) {
         sendMsg('sound', 'bd', 'drum', 'bd');
         $('#history ul').prepend('<li> you : Bass Drum</li>');
     };
-    // soundsCy[mouse_down] = function(event) {
+    // soundElements['cy'][mouse_down] = function(event) {
     //     sendMsg('sound', 'cy', 'drum', 'cy');
     //     $('#history ul').prepend('<li> you : Cymbal</li>');
     // };
