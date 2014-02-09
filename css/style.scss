@@ -506,3 +506,99 @@ $efg: #fff;
     opacity: 0;
   }
 }
+
+
+.sss-timelineWrapper{
+  background-color: #ecf0f1;
+  color: #2e2e2e;
+  width: 740px;
+  margin: -50px auto 40px;
+  padding: 1px 0px;
+  .sss-timeline{
+    position: relative;
+    // border-bottom: 2px solid #eee;
+    width: 720px;
+    height: 40px;
+    margin: 20px auto;
+    overflow: hidden;
+
+    &:before{
+      position: absolute;
+      border-bottom: 1px solid #2e2e2e;
+      width: 100%;
+      content: "";
+      display: block;
+      left: 0;
+      top: 50%;
+    }
+    &:after{
+      @extend .fa;
+      position: absolute;
+      // border-left: 1px solid #2e2e2e;
+      border: 1px solid #2e2e2e;
+      // content: "";
+      content: "\f001";
+      $hantei: 35px;
+      top: 50%;
+      left: 10px;
+      width: $hantei;
+      height: $hantei;
+      line-height: $hantei;
+      border-radius: 50%;
+      background-color: #ecf0f1;
+      text-align: center;
+      margin-top: -($hantei/2);
+      display: block;
+      font-size: 18px;
+    }
+    $note: 30px;
+    .sss-note{
+      display: block;
+      width: $note;
+      height: $note;
+      margin-top: -($note/2);
+      border-radius: 50%;
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      left: 100%;
+      animation: anime-note 1000ms linear 0 1;
+    }
+    &.sss-timeline-hh{
+      .sss-note{
+        background-color: $hh;
+      }
+    }
+    &.sss-timeline-bd{
+      .sss-note{
+        background-color: $bd;
+      }
+    }
+    &.sss-timeline-sd{
+      .sss-note{
+        background-color: $sd;
+      }
+    }
+  }
+
+}
+
+@keyframes anime-note{
+  0%{
+    transform: translateX(0);
+  }
+  100%{
+    transform: translateX(-740px);
+  }
+}
+
+.sss-units{
+  margin: 0 auto;
+  text-align: center;
+  .drum-item{
+    display: inline-block;
+    margin-right: 10px;
+    width: 250px;
+    line-height: 250px;
+  }
+}
