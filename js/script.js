@@ -200,6 +200,7 @@ function checkSound() {
 function endMusic() {
     isSession = false;
     $('#waiting').show();
+    $('#session-call').text('Start Session');
     $('#starting').hide();
     window.clearInterval(timer);
 
@@ -237,6 +238,7 @@ function startMusic() {
     checkSound();
     isSession = true;
     $('#waiting').hide();
+    $('#session-call').text('Start Session');
     $('#starting').show();
 }
 
@@ -246,7 +248,7 @@ function setPlayerList(player){
     // playerがplayerListの配列にあるかどうかを確認する
     if (playerList.indexOf(player) < 0) {
         playerList.push(player); // playerList配列に追加
-        $('#session').append(player);
+        // $('#session').append(player);
         scores[player] = 0; // スコアのリセット
     }
 
@@ -257,6 +259,8 @@ function setPlayerList(player){
         $("#waiting").hide();
         $("#starting").show();
         startMusic();
+        $('#session-call').text('Session Start');
+
     }
 }
 
@@ -467,6 +471,7 @@ $(function(){
         // checkSound();
         startMusic();
         $('#waiting').hide();
+        $('#session-call').text('Start Session');
         $('#starting').show();
     });
  
