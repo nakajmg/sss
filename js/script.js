@@ -60,6 +60,7 @@ peer.on('open', function(){
 
 peer.on('connection', function(conn){
 	dataChannelEvent(conn);
+    makePlayerCard(conn);
 });
 
 // エラーハンドラー
@@ -262,6 +263,66 @@ function checkAccuracy(data) {
     }
 }
 
+function makePlayerCard(conn) {
+
+    var cardNum = 0;
+    for(var i=0; i<chatList.length; i++) {
+        if(chatList[i]==conn.peer) cardNum=i;
+    }
+
+    var item = '<div class="sss-unitInfo client" id="card-' + cardNum + '"><p class="sss-unitInfo-id" id="id-' + cardNum + '">' + conn.peer + '</p><p class="sss-unitInfo-inst" id="inst-' + cardNum + '">Drums</p><p class="sss-unitInfo-type" id="key-' + cardNum + '"></p><span class="sss-unitInfo-arrow"></span></div>';
+
+    $("#playerCard").append(item);
+}
+
+function updatePlayerCard(data) {
+
+    var cardNum;
+    for(var i=0; i<chatList.length; i++) {
+
+        console.log(chatList[i] + data.user);
+
+        if(chatList[i]==data.user) cardNum=i;
+    }
+
+    var keyName;
+    var keyClass;
+
+    switch(data.key){
+        case 'hh': 
+            keyName = 'Hi-hat';
+            keyClass = 'unit-hh';
+            break;
+        case 'sd': 
+            keyName = 'Snare Drum';
+            keyClass = 'unit-sd';
+            break;
+        case 'bd': 
+            keyName = 'Bass Drum';
+            keyClass = 'unit-bd';
+            break;
+        case 'cy': 
+            keyName = 'Cymbal'; 
+            keyClass = 'unit-cy';
+            break;
+    }
+
+    if(cardNum==0) {
+        // $('#key-0').text(data.key);
+        $("#key-0").text(keyName);
+        $("#card-0").removeClass('unit-hh unit-sd unit-db unit-cy');
+        $("#card-0").addClass(keyClass);
+    } else if (cardNum==1) {
+        $('#key-1').text(keyName);
+        $("#card-1").removeClass('unit-hh unit-sd unit-db unit-cy');
+        $("#card-1").addClass(keyClass);
+    } else if (cardNum==2) {
+        $('#key-2').text(keyName);
+        $("#card-2").removeClass('unit-hh unit-sd unit-db unit-cy');
+        $("#card-2").addClass(keyClass);
+    } 
+}
+
 function dataChannelEvent(conn){
 	peerConn[peerConn.length] = conn;
     $('#their-id').append(conn.peer);
@@ -269,6 +330,7 @@ function dataChannelEvent(conn){
     $("#session-call").show();
 
     chatList[chatList.length] = conn.peer;
+    // makePlayerCard(conn);
 
 
     // for(var i = 0; i < peerConn.length; i++){
@@ -291,7 +353,10 @@ function dataChannelEvent(conn){
                 }
                 if(data.text == 'heartbeat') sendMsg('info','alive');
                 if(data.text == 'alive') getTransferLag(data);
-                if(data.text == 'inst') setMutedList(data);
+                if(data.text == 'inst') {
+                    setMutedList(data);
+                    updatePlayerCard(data);
+                }
 
             }
         });
