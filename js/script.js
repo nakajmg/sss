@@ -278,11 +278,11 @@ function getTransferLag(data){
 
 function doScore(data, isGood) {
     if (isGood) {
-        $('sounds-' + data.key).trigger('check:great');
+        $('#sounds-' + data.key).trigger('check:great');
         $('#history ul').prepend('<li>Great!</li>');
         scores[data.user] += 50;
     } else {
-        $('sounds-' + data.key).trigger('check:miss');
+        $('#sounds-' + data.key).trigger('check:miss');
         $('#history ul').prepend('<li>Oops</li>');
         scores[data.user] += 20;
     }

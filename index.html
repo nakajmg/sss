@@ -18,46 +18,65 @@
 </head>
 <body>
 
-<section class="sss-wrapper">
-    <header class="sss-header">
-        <h1 class="sss-title">Second Screen Session</h1>
-        <p class="sss-subTitle">Catch the beat</p>
-    </header>
+    <section class="sss-wrapper">
+        <header class="sss-header">
+            <h1 class="sss-title">Second Screen Session</h1>
+            <p class="sss-subTitle">Catch the beat</p>
+        </header>
 
-    <div class="sss-unitInfo host">
-        <p class="sss-unitInfo-id" id="my-id"></p>
-        <div class="sss-unitInfo-rowRight">
-            <div id="music" class="sss-unitInfo-btnWrapper">
-                <button class="sss-unitInfo-btn" id="music-start">Start Music</button>
+      <div id="waiting">
+        <div class="sss-unitInfo host">
+            <p class="sss-unitInfo-id" id="my-id"></p>
+            <div class="sss-unitInfo-rowRight">
+                <div id="music" class="sss-unitInfo-btnWrapper">
+                    <button class="sss-unitInfo-btn" id="music-start">Start Music</button>
+                </div>
+                <div id="session" class="sss-unitInfo-btnWrapper">
+                    <button class="sss-unitInfo-btn" id="session-call">Start Session</button>
+                </div>
             </div>
-            <div id="session" class="sss-unitInfo-btnWrapper">
-                <button class="sss-unitInfo-btn" id="session-call">Start Session</button>
-            </div>
+        </div>
+
+        <div class="sss-clients" id="playerCard">
+
         </div>
     </div>
 
-<!--     <div class="sss-clients">
-        <div class="sss-unitInfo client unit-hh">
-            <p class="sss-unitInfo-id">drum01</p>
-            <p class="sss-unitInfo-inst">Drums</p>
-            <p class="sss-unitInfo-type">Hi-Hat</p>
-            <span class="sss-unitInfo-arrow"></span>
+  <div id="starting">
+    <section id="timelineWrapper" class="sss-timelineWrapper">
+        <div class="sss-timeline sss-timeline-hh">
+            <!-- <span class="sss-note"></span> -->
         </div>
-        <div class="sss-unitInfo client unit-bd">
-            <p class="sss-unitInfo-id">drum02</p>
-            <p class="sss-unitInfo-inst">Drums</p>
-            <p class="sss-unitInfo-type">Bass Drum</p>
+        <div class="sss-timeline sss-timeline-sd" id="test-timeline">
+            <!-- <span class="sss-note"></span> -->
         </div>
-        <div class="sss-unitInfo client unit-sd">
-            <p class="sss-unitInfo-id">drum03</p>
-            <p class="sss-unitInfo-inst">Drums</p>
-            <p class="sss-unitInfo-type">Snare</p>
+        <div class="sss-timeline sss-timeline-bd">
+            <!-- <span class="sss-note"></span> -->
         </div>
-    </div> -->
+    </section>
 
-    <div class="sss-clients" id="playerCard">
+    <section class="sss-units">
+        <div class="drum-item drum-hh">
+            Hi-Hat
+            <div class="drum-effect"></div>
+        </div>
+        <div class="drum-item drum-bd">
+            Bass Drum
+            <div class="drum-effect"></div>
+        </div>
+        <div class="drum-item drum-sd">
+            Snare
+            <div class="drum-effect"></div>
+        </div>
+    </section>
 
+    <div id="sound-buttons">
+        <img class="" id="sounds-hh" src="http://dummyimage.com/100x40/fefefe/0010ee&text=Hi-hat" alt="Hi-hat">
+        <img class="" id="sounds-sd" src="http://dummyimage.com/100x40/fefefe/0010ee&text=Snare+Drum" alt="SnareDrum">
+        <img class="" id="sounds-bd" src="http://dummyimage.com/100x40/fefefe/0010ee&text=Bass+Drum" alt="BassDrum">
+        <img class="" id="sounds-cy" src="http://dummyimage.com/100x40/fefefe/0010ee&text=Cymbal" alt="Cymbal">
     </div>
+  </div>
 
     <p>
         <h3>難易度</h3>
@@ -82,12 +101,12 @@
         <button id="music-start">Musicスタート！</button>
     </div> -->
 
-    <div id="sound-buttons">
+<!--     <div id="sound-buttons">
         <img class="" id="sounds-hh" src="http://dummyimage.com/100x40/fefefe/0010ee&text=Hi-hat" alt="Hi-hat">
         <img class="" id="sounds-sd" src="http://dummyimage.com/100x40/fefefe/0010ee&text=Snare+Drum" alt="SnareDrum">
         <img class="" id="sounds-bd" src="http://dummyimage.com/100x40/fefefe/0010ee&text=Bass+Drum" alt="BassDrum">
         <img class="" id="sounds-cy" src="http://dummyimage.com/100x40/fefefe/0010ee&text=Cymbal" alt="Cymbal">
-    </div>
+    </div> -->
 
     <div id="history">
         <ul>
