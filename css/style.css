@@ -507,3 +507,7 @@ ul, li {
     margin-right: 10px;
     width: 250px;
     line-height: 250px; }
+
+#session-response {
+  width: 100%;
+  margin-top: 10px; }
