@@ -176,7 +176,7 @@ function playSound(note) {
     var key = note.key;
     if (muted.indexOf(key) < 0) {
         console.log('TRIGGER: ' + key);
-        $('sounds-' + key).trigger('addNote');
+        $('#sounds-' + key).trigger('addNote');
         setTimeout(function() {
             makeSounds(buffers[key]);
         }, leadIn)
