@@ -455,8 +455,8 @@ $(function(){
 
     $('#session-call').click(function(event) {
        sendMsg('info', 'Ready?');
-        $('#session-call').text('募集中...');
-        $('#session').append('join : ');  
+        $('#session-call').text('inviting...');
+        // $('#session').append('join : ');  
     });
 
     $('#session-response').click(function(event) {
