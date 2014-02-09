@@ -205,7 +205,7 @@ function getTransferLag(data){
     var HBEndTime = new Date();
     var lag = HBEndTime - HBStartTime;
 
-    labList[data.user] = (undefined) ? 0 : 500;
+    labList[data.user] = (undefined) ? 0 : lag/2;
 
     // console.log('Transfer lag time : ' + data.user + ' ' + lag/2 + 'ms');
 }
