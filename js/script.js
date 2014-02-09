@@ -2,19 +2,39 @@
 // CONFIG OPTIONS START
 
 var accuracy = 8; // 1 = crotchet, 2 = quaver, 4 = semi-quaver, 8 = demi-semi-quaver
-var bpm = 100; // beats per minute
-var margin = 200; // How many milliseconds to forgive missed beats
-var muted = []; // List muted (silent) instruments
+// var bpm = 100; // beats per minute
+// var margin = 200; // How many milliseconds to forgive missed beats
+// var muted = []; // List muted (silent) instruments
 
 // CONFIG OPTIONS END
 
 // Audio speed settings
 var count = 0;
-var bps = bpm / 60; // beats per second
-var interval = (1000 / bps / accuracy) >> 0; // seconds per beat
-var multiplier = interval * accuracy;
-var timer;
-var countdown;
+// var bps = bpm / 60; // beats per second
+// var interval = (1000 / bps / accuracy) >> 0; // seconds per beat
+// var multiplier = interval * accuracy;
+// var timer;
+// var countdown;
+
+
+var timer, countdown, bpm, margin, bps, interval, multiplier;
+var muted = []; // List muted (silent) instruments
+
+// Difficulty levels
+var levels = {
+    'easy': {
+        bpm: 100, // beats per minute
+        margin: 200 // How many milliseconds to forgive missed beats
+    },
+    'normal': {
+        bpm: 120,
+        margin: 150
+    },
+    'hard': {
+        bpm: 140,
+        margin: 100
+    }
+}
 
 var currentBeat = {};
 var lag = 0; // Time lag across the network
@@ -44,6 +64,7 @@ var userList = [];
 var chatList = [];
 var playerList = [];
 var instList = {};
+var scores = {};
 
 // PeerJSオブジェクトを生成
 var peer = new Peer(userName,{ key: APIKEY});
@@ -166,15 +187,42 @@ function checkSound() {
         if ( currentBeat === null) endMusic();
         else currentBeat.data.forEach(playSound);
     }
-    count = count + interval;
+    count += interval;
 }
 
 function endMusic() {
     isSession = false;
     window.clearInterval(timer);
+
+    for (var i = 0, player; player = playerList[i]; i++) {
+        $('#history ul').prepend('<li>' + player + ' score: ' + scores[player] + '</li>');
+    }
+}
+
+// 難易度を設定する
+function setDifficulty() {
+    var difficulties = document.querySelectorAll('input[name=difficulty]');
+    
+    for (var i = 0, difficulty; difficulty = difficulties[i]; i++) {
+        if (difficulty.checked) {
+            bpm = levels[difficulty.value].bpm; // beats per minute
+            margin = levels[difficulty.value].margin; // How many milliseconds to forgive missed beats
+        }
+    }
+    
+    bps = bpm / 60; // beats per second
+    interval = (1000 / bps / accuracy) >> 0; // seconds per beat
+    multiplier = interval * accuracy;
 }
 
 function startMusic() {
+    setDifficulty();
+    
+    // スコアのリセット
+    for (var i = 0, player; player = playerList[i]; i++) {
+       console.log(player);
+    }  
+
     // 音楽用のタイマー
     timer = window.setInterval(checkSound, interval);
     checkSound();
@@ -183,9 +231,13 @@ function startMusic() {
 
 
 function setPlayerList(player){
-    for(var i=0; i < playerList.length && playerList[i] != player ; i++);
-    if(i == playerList.length) playerList[playerList.length] = player;
-    $('#session').append(player);
+
+    // playerがplayerListの配列にあるかどうかを確認する
+    if (playerList.indexOf(player) < 0) {
+        playerList.push(player); // playerList配列に追加
+        $('#session').append(player);
+        scores[player] = 0; // スコアのリセット
+    }
 
     if(playerList.length == chatList.length) {
         console.log("all mens ready!");
@@ -224,13 +276,15 @@ function getTransferLag(data){
     // console.log('Transfer lag time : ' + data.user + ' ' + lag/2 + 'ms');
 }
 
-function showTiming(key, isGood) {
+function doScore(data, isGood) {
     if (isGood) {
-        $('sounds-' + key).trigger('check:great');
+        $('sounds-' + data.key).trigger('check:great');
         $('#history ul').prepend('<li>Great!</li>');
+        scores[data.user] += 50;
     } else {
-        $('sounds-' + key).trigger('check:miss');
+        $('sounds-' + data.key).trigger('check:miss');
         $('#history ul').prepend('<li>Oops</li>');
+        scores[data.user] += 20;
     }
 }
 
@@ -243,9 +297,9 @@ function checkAccuracy(data) {
         for (var i = 0, len = currentBeat.data.length; i < len; i++) {
             if (currentBeat.data[i].key === data.key) {
                 if (soundTime - currentBeat.time * multiplier < margin) {
-                    showTiming(data.key, true);
+                    doScore(data, true);
                 } else {
-                    showTiming(data.key, false);
+                    doScore(data, false);
                 }
             }
         }
@@ -254,9 +308,9 @@ function checkAccuracy(data) {
         for (var i = 0, len = nextBeat.data.length; i < len; i++) {
             if (nextBeat.data[i].key === data.key) {
                 if (nextBeat.time * multiplier - soundTime < margin) {
-                    showTiming(data.key, true);
+                    doScore(data, true);
                 } else {
-                    showTiming(data.key, false);
+                    doScore(data, false);
                 }
             }
         }
