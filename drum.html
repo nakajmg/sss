@@ -19,9 +19,9 @@
 <body>
 <section class="drum">
     <ul class="drum-tabs">
-        <li data-index="0" class="drum-tab drum-tab-hh active">Hi-Hat
-        <li data-index="1" class="drum-tab drum-tab-bd">Bass Drum
-        <li data-index="2" class="drum-tab drum-tab-sd">Snare
+        <li data-index="0" class="drum-tab drum-tab-hh active" id="tab-hh">Hi-Hat
+        <li data-index="1" class="drum-tab drum-tab-bd" id="tab-bd">Bass Drum
+        <li data-index="2" class="drum-tab drum-tab-sd" id="tab-sd">Snare
     </ul>
     <section data-index="0" class="drum-content drum-content-hh active">
         <div class="drum-item drum-hh">
@@ -68,6 +68,8 @@
     <script type="text/javascript">
         // ユーザ名をランダムに生成
         var userName = 'drum' + Math.floor(Math.random() * 100);
+        var myInst = 'drum';
+        var myKey = 'hh';
     </script>
 
     <script src="./js/jquery-2.1.0.min.js"></script>
