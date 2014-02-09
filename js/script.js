@@ -192,6 +192,8 @@ function checkSound() {
 
 function endMusic() {
     isSession = false;
+    $('#waiting').show();
+    $('#starting').hide();
     window.clearInterval(timer);
 
     for (var i = 0, player; player = playerList[i]; i++) {
@@ -227,6 +229,8 @@ function startMusic() {
     timer = window.setInterval(checkSound, interval);
     checkSound();
     isSession = true;
+    $('#waiting').hide();
+    $('#starting').show();
 }
 
 
@@ -243,6 +247,8 @@ function setPlayerList(player){
         console.log("all mens ready!");
         heartBeat();
         clearTimeout(countdown);
+        $("#waiting").hide();
+        $("#starting").show();
         startMusic();
     }
 }
@@ -453,6 +459,8 @@ $(function(){
         // timer = window.setInterval(checkSound, interval);
         // checkSound();
         startMusic();
+        $('#waiting').hide();
+        $('#starting').show();
     });
  
      $('#tab-hh').click(function(event) {
