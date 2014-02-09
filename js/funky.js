@@ -2,51 +2,11 @@ var drum = [
     {
         time: 1,
         data: [
-            {key: 'hh'},
-            {key: 'bd'}
-        ]
-    },
-    {
-        time: 1.5,
-        data: [
-            {key: 'hh'}
-        ]
-    },
-    {
-        time: 2,
-        data: [
-            {key: 'hh'},
-            {key: 'sd'}
-        ]
-    },
-    {
-        time: 2.5,
-        data: [
             {key: 'hh'}
         ]
     },
     {
         time: 3,
-        data: [
-            {key: 'hh'},
-            {key: 'bd'}
-        ]
-    },
-    {
-        time: 3.5,
-        data: [
-            {key: 'hh'}
-        ]
-    },
-    {
-        time: 4,
-        data: [
-            {key: 'hh'},
-            {key: 'sd'}
-        ]
-    },
-    {
-        time: 4.5,
         data: [
             {key: 'hh'}
         ]
@@ -54,25 +14,11 @@ var drum = [
     {
         time: 5,
         data: [
-            {key: 'hh'},
-            {key: 'bd'}
-        ]
-    },
-    {
-        time: 5.5,
-        data: [
             {key: 'hh'}
         ]
     },
     {
         time: 6,
-        data: [
-            {key: 'hh'},
-            {key: 'sd'}
-        ]
-    },
-    {
-        time: 6.5,
         data: [
             {key: 'hh'}
         ]
@@ -86,8 +32,7 @@ var drum = [
     {
         time: 7.5,
         data: [
-            {key: 'hh'},
-            {key: 'sd'}
+            {key: 'hh'}
         ]
     },
     {
@@ -100,15 +45,14 @@ var drum = [
         time: 8.5,
         data: [
             {key: 'hh'},
-            {key: 'sd'}
+            {key: 'bd'}
         ]
     },
     {
         time: 9,
         data: [
             {key: 'hh'},
-            {key: 'bd'},
-            {key: 'cy'}
+            {key: 'bd'}
         ]
     },
     {
@@ -330,7 +274,8 @@ var drum = [
     {
         time: 26,
         data: [
-            {key: 'hh'}
+            {key: 'hh'},
+            {key: 'sd'}
         ]
     },
     {
@@ -342,27 +287,27 @@ var drum = [
     {
         time: 27,
         data: [
-            {key: 'hh'}
+            {key: 'hh'},
+            {key: 'bd'}
         ]
     },
     {
         time: 27.5,
         data: [
-            {key: 'hh'},
-            {key: 'sd'}
+            {key: 'hh'}
         ]
     },
     {
         time: 28,
         data: [
-            {key: 'hh'}
+            {key: 'hh'},
+            {key: 'sd'}
         ]
     },
     {
         time: 28.5,
         data: [
-            {key: 'hh'},
-            {key: 'sd'}
+            {key: 'hh'}
         ]
     },
     {
@@ -394,8 +339,7 @@ var drum = [
     {
         time: 31,
         data: [
-            {key: 'hh'},
-            {key: 'bd'}
+            {key: 'hh'}
         ]
     },
     {
@@ -409,13 +353,6 @@ var drum = [
         time: 32,
         data: [
             {key: 'hh'},
-            {key: 'sd'}
-        ]
-    },
-    {
-        time: 32.25,
-        data: [
-            {key: 'sd'}
         ]
     },
     {
@@ -427,6 +364,118 @@ var drum = [
     },
     {
         time: 33,
+        data: [
+            {key: 'hh'},
+            {key: 'bd'},
+            {key: 'cy'}
+        ]
+    },
+    {
+        time: 33.5,
+        data: [
+            {key: 'hh'}
+        ]
+    },
+    {
+        time: 34,
+        data: [
+            {key: 'hh'}
+        ]
+    },
+    {
+        time: 34.5,
+        data: [
+            {key: 'hh'}
+        ]
+    },
+    {
+        time: 35,
+        data: [
+            {key: 'hh'}
+        ]
+    },
+    {
+        time: 35.5,
+        data: [
+            {key: 'hh'},
+            {key: 'sd'}
+        ]
+    },
+    {
+        time: 36,
+        data: [
+            {key: 'hh'}
+        ]
+    },
+    {
+        time: 36.5,
+        data: [
+            {key: 'hh'},
+            {key: 'sd'}
+        ]
+    },
+    {
+        time: 37,
+        data: [
+            {key: 'hh'},
+            {key: 'bd'}
+        ]
+    },
+    {
+        time: 37.5,
+        data: [
+            {key: 'hh'}
+        ]
+    },
+    {
+        time: 38,
+        data: [
+            {key: 'hh'},
+            {key: 'sd'}
+        ]
+    },
+    {
+        time: 38.5,
+        data: [
+            {key: 'hh'}
+        ]
+    },
+    {
+        time: 39,
+        data: [
+            {key: 'hh'},
+            {key: 'bd'}
+        ]
+    },
+    {
+        time: 39.5,
+        data: [
+            {key: 'hh'},
+            {key: 'sd'}
+        ]
+    },
+    {
+        time: 40,
+        data: [
+            {key: 'hh'},
+            {key: 'sd'}
+        ]
+    },
+    {
+        time: 40.25,
+        data: [
+            {key: 'sd'}
+        ]
+    },
+    {
+        time: 40.5,
+        data: [
+            {key: 'hh'},
+            {key: 'sd'}
+        ]
+    },
+    {
+        time: 41,
         data: [
             {key: 'cy'}
         ]
