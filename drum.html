@@ -7,6 +7,7 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
     <!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -42,12 +43,10 @@
         </div>
     </section>
 
-    <p id="session-info">
-        あなたのPeerID：<span id="my-id">...</span><br>
-        チャット中のPeerID：<span id="their-id"></span><br>
-        チャット可能なPeerID：<select id="contactlist" name="contact"></select>
-        <button type="button" id="make-connection">接続</button>
-    </p>
+    <div class="drum-connectWrapper">
+        <select id="contactlist" name="contact"></select>
+        <button type="button" class="drum-connectBtn" id="make-connection">Connect</button>
+    </div>
 
     <div id="session">
         <button type="button" id="session-response">セッション参加！</button>
