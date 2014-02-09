@@ -15,7 +15,7 @@ var count = 0;
 // var multiplier = interval * accuracy;
 // var timer;
 // var countdown;
-
+var leadIn = 2000; // Milliseconds to wait for notes to appear
 
 var timer, countdown, bpm, margin, bps, interval, multiplier;
 var muted = []; // List muted (silent) instruments
@@ -173,8 +173,14 @@ function makeSounds(buffer){
 
 function playSound(note) {
     // Play sound if instrument is not muted
-    if (muted.indexOf(note.key) < 0) {
-        makeSounds(buffers[note.key]);
+    var key = note.key;
+    if (muted.indexOf(key) < 0) {
+        console.log('TRIGGER: ' + key);
+        $('sounds-' + key).trigger('addNote');
+        setTimeout(function() {
+            makeSounds(buffers[key]);
+        }, leadIn)
+        //makeSounds(buffers[key]);
     }
 }
 
@@ -183,6 +189,7 @@ function checkSound() {
     if (drum.length < 1) {
         endMusic();
     } else if (drum[0].time * multiplier === count) {
+        console.log('BEAT');
         currentBeat = drum.shift();
         if ( currentBeat === null) endMusic();
         else currentBeat.data.forEach(playSound);
