@@ -4,7 +4,7 @@
 var accuracy = 8; // 1 = crotchet, 2 = quaver, 4 = semi-quaver, 8 = demi-semi-quaver
 var bpm = 100; // beats per minute
 var margin = 200; // How many milliseconds to forgive missed beats
-var muted = ['']; // List muted (silent) instruments
+var muted = []; // List muted (silent) instruments
 
 // CONFIG OPTIONS END
 
@@ -43,6 +43,7 @@ var APIKEY = '1e1140a4-9099-11e3-87ef-c90d583d86c3';
 var userList = [];
 var chatList = [];
 var playerList = [];
+var instList = {};
 
 // PeerJSオブジェクトを生成
 var peer = new Peer(userName,{ key: APIKEY});
@@ -193,6 +194,18 @@ function setPlayerList(player){
     }
 }
 
+function setMutedList(data) {
+    if(data.key != undefined) instList[data.user] = data.key;
+
+    for(var i = 0, muted = []; i < playerList.length; i++) {
+        if(instList[playerList[i]] != undefined ) {
+            muted[muted.length] = instList[playerList[i]];
+        }
+    }
+
+    console.log('mute inst is ' + muted);
+}
+
 function heartBeat(){
     if(lagList) console.log(lagList);
     HBStartTime = new Date();
@@ -270,9 +283,14 @@ function dataChannelEvent(conn){
             }
             else if(data.type == 'info'){
                 if(data.text == 'Ready?') $("#session-response").show();
-                if(data.text == 'OK!') setPlayerList(data.user);
+                if(data.text == 'OK!') {
+                    setPlayerList(data.user);
+                    setMutedList(data);
+                }
                 if(data.text == 'heartbeat') sendMsg('info','alive');
                 if(data.text == 'alive') getTransferLag(data);
+                if(data.text == 'inst') setMutedList(data);
+
             }
         });
     // }
@@ -304,7 +322,7 @@ $(function(){
     });
 
     $('#session-response').click(function(event) {
-        sendMsg('info', 'OK!');
+        sendMsg('info', 'OK!', myInst, myKey);
         $('#session-response').hide();
         // countdown = setTimeout('startMusic()',1000);
     });
@@ -316,6 +334,22 @@ $(function(){
         startMusic();
     });
  
+     $('#tab-hh').click(function(event) {
+        myInst = 'drum';
+        myKey = 'hh';
+        sendMsg("info","inst",myInst,myKey);
+    });
+    $('#tab-bd').click(function(event) {
+        myInst = 'drum';
+        myKey = 'bd';
+        sendMsg("info","inst",myInst,myKey);
+    });
+    $('#tab-sd').click(function(event) {
+        myInst = 'drum';
+        myKey = 'sd';
+        sendMsg("info","inst",myInst,myKey);
+    });
+
     soundElements['hh'][mouse_down] = function(event) {
         sendMsg('sound', 'hh', 'drum', 'hh');
         $('#history ul').prepend('<li> you : Hi-hat</li>');
