@@ -223,10 +223,12 @@ function getTransferLag(data){
     // console.log('Transfer lag time : ' + data.user + ' ' + lag/2 + 'ms');
 }
 
-function showTiming(isGood) {
+function showTiming(key, isGood) {
     if (isGood) {
+        $('sounds-' + key).trigger('check:great');
         $('#history ul').prepend('<li>Great!</li>');
     } else {
+        $('sounds-' + key).trigger('check:miss');
         $('#history ul').prepend('<li>Oops</li>');
     }
 }
@@ -240,9 +242,9 @@ function checkAccuracy(data) {
         for (var i = 0, len = currentBeat.data.length; i < len; i++) {
             if (currentBeat.data[i].key === data.key) {
                 if (soundTime - currentBeat.time * multiplier < margin) {
-                    showTiming(true);
+                    showTiming(data.key, true);
                 } else {
-                    showTiming(false);
+                    showTiming(data.key, false);
                 }
             }
         }
@@ -251,9 +253,9 @@ function checkAccuracy(data) {
         for (var i = 0, len = nextBeat.data.length; i < len; i++) {
             if (nextBeat.data[i].key === data.key) {
                 if (nextBeat.time * multiplier - soundTime < margin) {
-                    showTiming(true);
+                    showTiming(data.key, true);
                 } else {
-                    showTiming(false);
+                    showTiming(data.key, false);
                 }
             }
         }
