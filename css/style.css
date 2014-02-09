@@ -5,7 +5,7 @@
   font-weight: normal;
   font-style: normal; }
 
-.fa, .drum .drum-connectWrapper:before, .drum .drum-connectBtn:before, .drum-item:before, .sss-wrapper .sss-unitInfo:before, .sss-wrapper .sss-unitInfo .sss-unitInfo-id:before, .sss-wrapper .sss-unitInfo .sss-unitInfo-inst:before, .sss-wrapper .sss-unitInfo .sss-unitInfo-type:before, .sss-timelineWrapper .sss-timeline:after {
+.fa, .drum .drum-connectWrapper:before, .drum .drum-connectBtn:before, .drum-item:before, .sss-wrapper .sss-unitInfo:before, .sss-wrapper .sss-unitInfo .sss-unitInfo-id:before, .sss-wrapper .sss-unitInfo .sss-unitInfo-inst:before, .sss-wrapper .sss-unitInfo .sss-unitInfo-type:before, .sss-timelineWrapper .sss-timeline:after, .sss-timelineWrapper .sss-timeline .sss-timeline-checkGreat:before, .sss-timelineWrapper .sss-timeline .sss-timeline-checkMiss:before {
   display: inline-block;
   font-family: FontAwesome;
   font-style: normal;
@@ -454,14 +454,32 @@ ul, li {
       z-index: 1;
       top: 50%;
       left: 100%;
-      -webkit-animation: anime-note 1000ms linear 0 1;
-      animation: anime-note 1000ms linear 0 1; }
+      -webkit-animation: anime-note 2000ms linear 0 1;
+      animation: anime-note 2000ms linear 0 1; }
     .sss-timelineWrapper .sss-timeline.sss-timeline-hh .sss-note {
       background-color: #2980b9; }
     .sss-timelineWrapper .sss-timeline.sss-timeline-bd .sss-note {
       background-color: #e74c3c; }
     .sss-timelineWrapper .sss-timeline.sss-timeline-sd .sss-note {
       background-color: #f1c40f; }
+    .sss-timelineWrapper .sss-timeline .sss-timeline-checkGreat {
+      display: none; }
+      .sss-timelineWrapper .sss-timeline .sss-timeline-checkGreat:before {
+        content: "\f118";
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        left: 50px;
+        z-index: 1; }
+    .sss-timelineWrapper .sss-timeline .sss-timeline-checkMiss {
+      display: none; }
+      .sss-timelineWrapper .sss-timeline .sss-timeline-checkMiss:before {
+        content: "\f119";
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        left: 50px;
+        z-index: 1; }
 
 @-webkit-keyframes anime-note {
   0% {
